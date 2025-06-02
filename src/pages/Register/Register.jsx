@@ -1,9 +1,13 @@
 import Lottie from "lottie-react";
-import React from "react";
+import React, { use } from "react";
 
 import registerLottie from "../../assets/lotties/register.json";
+import { AuthContext } from "../../contexts/AuthContext/AuthContext";
+import SocialLogin from "../Shared/SocialLogin";
 
 const Register = () => {
+
+  const {createUser} = use(AuthContext); 
 
 const handleRegister = e => {
   e.preventDefault();
@@ -11,7 +15,18 @@ const handleRegister = e => {
   const email = form.email.value;
   const password = form.password.value;
   console.log(email, password);
-};
+
+// create user
+createUser(email, password)
+  .then(result => {
+    console.log(result.user);
+})
+.catch(error => {
+    console.log(error);
+  });
+
+
+}
 
   return (
     <div className="hero bg-base-200 min-h-screen">
@@ -43,6 +58,7 @@ const handleRegister = e => {
                 <button className="btn btn-neutral mt-4">Register</button>
               </fieldset>
             </form>
+            <SocialLogin></SocialLogin>
           </div>
         </div>
       </div>
